@@ -13,10 +13,11 @@ public class mm : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask WhatIsGround;
     private bool grounded;
-
+    private Animator anim;
+    
     void Start()
     {
-        
+        anim= GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class mm : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(a))
+        if (Input.GetKey(a))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
@@ -36,8 +37,11 @@ public class mm : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = true;
             }
         }
+        anim.SetFloat("jumpHeight", GetComponent<Rigidbody2D>().velocity.y);
+        anim.SetFloat("moveSpeed",Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+        anim.SetBool("grounded", grounded);
 
-        if (Input.GetKeyDown(d))
+        if (Input.GetKey(d))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
